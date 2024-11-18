@@ -3,7 +3,7 @@ import useAxios from "../hooks/useAxsios";
 
 const VideoDetail = () => {
   const { id } = useParams();
-  const { data: video, loading, error } = useAxios(`http://localhost:3000/videos/${id}`);
+  const { data: video, loading, error } = useAxios(`https://youtube-api-orpin.vercel.app/videos/${id}`);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
