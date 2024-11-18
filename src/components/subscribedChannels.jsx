@@ -16,7 +16,7 @@ const SubscribedChannels = () => {
           <Link 
             key={channel.id} 
             to={`/channel/${channel.id}`} 
-            className="flex gap-3 items-center p-4 rounded-md text-white text-center hover:bg-gray-700"
+            className="w-full flex gap-3 items-center p-4 rounded-md text-white text-center hover:bg-gray-700"
           >
             <img
               src={channel.thumbnail}
