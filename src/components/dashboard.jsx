@@ -1,32 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SubscribedChannels from "./subscribedChannels";
+import { FaBars, FaYoutube } from "react-icons/fa";
 
 export default function Dashboard() {
+  const [toggle, setToggle] = useState(false);
+
   return (
-    <div className="flex">
-      {/* Sidebar */}
-      <div className="w-[250px] bg-gray-800 text-white p-4">
-        <h1 className="text-4xl font-bold mb-6">Dashboard</h1>
+    <div className={`flex relative  ${!toggle ? "w-[270px]":"w-[0]"} text-white bg-black`}>
+        <div className="flex gap-4 justify-center fixed top-2 left-8 items-center z-50">
+        <button onClick={()=>setToggle(!toggle)}>< FaBars /></button>
+        <p className="flex justify-center items-center gap-2 text-xl font-bold">
+        <span className="text-red-600 text-2xl"><FaYoutube /></span> <span>YouTube</span>
+        </p>
+        </div>
+        {/* Sidebar */}
+      <div>
+      <div className={!toggle ? "transition-all ease-linear duration-300 w-[230px] bg-black fixed  text-white p-4 left-0 top-[30px] " : "fixed -left-full top-[0] w-[250px]  text-white p-4 bg-black transition-all ease-linear duration-300"}>
+        
         <ul>
           <Link to="/">
             <li className="text-lg mb-4 hover:bg-gray-700 rounded p-2">Home</li>
           </Link>
-            <Link to="/videos">
-          <li className="text-lg mb-4 hover:bg-gray-700 rounded p-2">
-            Videos
-          </li>
-            </Link>
-            <Link to="/playlists">
-          <li className="text-lg mb-4 hover:bg-gray-700 rounded p-2">
-            Playlists
-          </li>
-            </Link>
-            <Link to="/library">
-          <li className="text-lg mb-4 hover:bg-gray-700 rounded p-2">
-            Library
-          </li>
-            </Link>
+          <Link to="/videos">
+            <li className="text-lg mb-4 hover:bg-gray-700 rounded p-2">
+              Videos
+            </li>
+          </Link>
+          <Link to="/playlists">
+            <li className="text-lg mb-4 hover:bg-gray-700 rounded p-2">
+              Playlists
+            </li>
+          </Link>
+          <Link to="/library">
+            <li className="text-lg mb-4 hover:bg-gray-700 rounded p-2">
+              Library
+            </li>
+          </Link>
           <li className="text-lg mb-4 hover:bg-gray-700 rounded p-2">
             <Link to="/history">History</Link>
           </li>
@@ -35,6 +45,7 @@ export default function Dashboard() {
           </li>
           <SubscribedChannels />
         </ul>
+      </div>
       </div>
 
       {/* Main content

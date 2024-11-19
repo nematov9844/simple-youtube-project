@@ -8,9 +8,9 @@ import Dashboard from "./components/dashboard";
 
 const App = () => {
   return (
-    <div className="flex gap-4  bg-gray-700">
+    <div className="flex gap-4 w-full h-screen bg-black">
 <Dashboard/>
-<div className="bg-gray-700 text-white w-full">
+<div className="bg-black text-white w-full">
       <Routes>
         <Route path="/" element={<Home />} />
 
