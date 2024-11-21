@@ -1,75 +1,43 @@
-import { Link } from "react-router-dom";
-import useAxios from "../hooks/useAxsios";
-import { useState } from "react";
-import { IoSearch } from "react-icons/io5";
-import { CiSearch } from "react-icons/ci";
+import React from 'react';
+import { Link } from 'react-router-dom'; // Link komponentini import qilish
+import useAxios from '../hooks/useAxsios';
 
-const Home = () => {
-  const {
-    data: videos,
-    loading,
-    error,
-  } = useAxios("https://youtube-api-orpin.vercel.app/videos");
-  const [search, setSearch] = useState("");
+export default function Home() {
+  const { data, loading, error } = useAxios('/videos', 'GET');
 
-  if (loading) return <p className="text-center">Loading...</p>;
-  if (error)
-    return <p className="text-center text-red-500">Error: {error.message}</p>;
+  if (loading) {
+    return <div>Loadingfwrgethyuyki,...</div>;
+  }
 
-  const filteredVideos = videos.filter((video) =>
-    video.title.toLowerCase().includes(search.toLowerCase())
-  );
+  if (error) {
+    return <div>Error loading videos</div>;
+  }
 
   return (
-    <div className=" min-h-screen">
-      <header className=" p-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-center">
-          <div className="w-full max-w-[600px] flex justify-between items-center  rounded-full bg-[rgb(15,15,15)] border-2 border-gray-800 text-white  ">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="bg-transparent outline-none pl-4 py-2"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <p className="text-2xl bg-[rgb(35,35,35)]  h-full py-3 px-5 rounded-r-full">
-              <CiSearch />
-            </p>
-          </div>
-        </div>
-      </header>
-
-      {/* Video grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-8 p-4">
-        {filteredVideos.length === 0 && search && (
-          <p className="text-center text-white">
-            No videos found for "{search}"
-          </p>
-        )}
-        {filteredVideos.map((video) => (
-          <Link
-            key={video.id}
-            to={`/video/${video.id}`}
-            className="group block rounded-lg overflow-hidden shadow-lg bg-black"
-          >
-            <img
-              src={video.thumbnail}
-              alt={video.title}
-              className="w-full h-48 object-cover group-hover:opacity-80 transition duration-300"
-            />
-            <div className="p-4">
-              <h3 className="text-xl font-semibold text-gray-300">
-                {video.title}
-              </h3>
-              <p className="text-gray-400 mt-2">
-                {video.views} views • {video.uploadedAt}
-              </p>
+    <div className="text-white">
+      <h1 className="text-3xl font-bold mb-4">Trending Videos</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {data ? (
+          data.map((video) => (
+            <div
+              key={video.id}
+              className="bg-[rgba(255,255,255,0.15)] p-4 rounded-lg shadow-lg"
+            >
+              <Link to={`/video-details/${video.id}`}> {/* Video id bilan Link yaratish */}
+                <img
+                  src={video.thumbnail}
+                  alt={video.title}
+                  className="w-full h-48 object-cover rounded-lg"
+                />
+                <h3 className="text-xl font-semibold mt-4">{video.title}</h3>
+                <p className="text-sm text-gray-400">{video.description}</p>
+              </Link>
             </div>
-          </Link>
-        ))}
+          ))
+        ) : (
+          <p>No videos found</p>
+        )}
       </div>
     </div>
   );
-};
-
-export default Home;
+}
